@@ -1,0 +1,37 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+
+      <h2>Comentarios de los Usuarios</h2>
+      <br/>
+
+      <table class="table table-hover shadow-sm">
+        <thead class="table-dark">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Autor</th>
+          <th scope="col">Comentario</th>
+          <th scope="col">ID Evento</th>
+        </tr>
+        </thead>
+        <tbody class="table-group-divider">
+
+          @for (comentario of comentarios; track comentario.id) {
+            <tr>
+              <th scope="row">{{ comentario.id }}</th>
+              <td>{{ comentario.autor }}</td>
+              <td>{{ comentario.texto }}</td>
+              <td>{{ comentario.idEvento }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="4" class="text-center text-muted">Aún no hay comentarios registrados.</td>
+            </tr>
+          }
+
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
