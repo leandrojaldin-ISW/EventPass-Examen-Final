@@ -1,6 +1,6 @@
 <div class="container mt-4">
   <div class="row justify-content-center">
-    <div class="col-md-10">
+    <div class="col-md-12"> <!-- Lo amplié a col-12 para que entren más columnas -->
 
       <h2>Mis Eventos (EventPass)</h2>
       <br/>
@@ -13,10 +13,12 @@
         <thead class="table-dark">
         <tr>
           <th scope="col">ID</th>
-          <th scope="col">Nombre del Evento</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Fecha</th>
           <th scope="col">Ubicación</th>
+          <th scope="col">Tipo</th>
           <th scope="col">Precio (Bs.)</th>
-          <th scope="col">Acciones</th>
+          <th scope="col" class="text-center">Acciones</th>
         </tr>
         </thead>
         <tbody class="table-group-divider">
@@ -24,22 +26,30 @@
             <tr>
               <th scope="row">{{ evento.id }}</th>
               <td>{{ evento.nombre }}</td>
+              <td>{{ evento.fecha }}</td>
               <td>{{ evento.ubicacion }}</td>
-              <td>{{ evento.precioEntrada }}</td>
               <td>
+                <span class="badge" [class.bg-success]="evento.tipoEvento === 'Gratuito'" [class.bg-primary]="evento.tipoEvento === 'Pagado'">
+                  {{ evento.tipoEvento }}
+                </span>
+              </td>
+              <td>{{ evento.tipoEvento === 'Gratuito' ? '0' : evento.precioEntrada }}</td>
+              <td class="text-center">
                 <div class="btn-group" role="group">
+                  <!-- Botón Editar -->
                   <button type="button" class="btn btn-outline-primary btn-sm" [routerLink]="['/eventos/editar', evento.id]">
                     Editar
                   </button>
-                  <button type="button" class="btn btn-outline-primary btn-sm" routerLink="/eventos/editar/{{evento.id}}">
-                    Editar
+                  <!-- Botón Eliminar conectado a la función -->
+                  <button type="button" class="btn btn-outline-danger btn-sm" (click)="eliminar(evento.id)">
+                    Eliminar
                   </button>
                 </div>
               </td>
             </tr>
           } @empty {
             <tr>
-              <td colspan="5" class="text-center text-muted">No hay eventos registrados.</td>
+              <td colspan="7" class="text-center text-muted">No hay eventos registrados.</td>
             </tr>
           }
         </tbody>

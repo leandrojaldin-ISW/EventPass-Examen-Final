@@ -1,27 +1,48 @@
 <div class="container mt-4">
   <div class="row justify-content-center">
-    <div class="col-md-6 shadow-sm p-4 bg-white rounded">
+    <div class="col-md-8 shadow-sm p-4 bg-white rounded">
 
       <h3 class="mb-4 text-center">{{ evento.id === 0 ? 'Crear Nuevo Evento' : 'Editar Evento' }}</h3>
 
-      <div class="mb-3">
-        <label class="form-label fw-bold">Código (ID)</label>
-        <input type="text" [disabled]="true" class="form-control bg-light" [(ngModel)]="evento.id">
+      <div class="row">
+        <div class="col-md-2 mb-3">
+          <label class="form-label fw-bold">ID</label>
+          <input type="text" [disabled]="true" class="form-control bg-light" [(ngModel)]="evento.id">
+        </div>
+        <div class="col-md-10 mb-3">
+          <label class="form-label fw-bold">Nombre del Evento</label>
+          <input type="text" class="form-control" [(ngModel)]="evento.nombre" placeholder="Ej: Build With AI Google">
+        </div>
       </div>
 
       <div class="mb-3">
-        <label class="form-label fw-bold">Nombre del Evento</label>
-        <input type="text" class="form-control" [(ngModel)]="evento.nombre" placeholder="Ej: Torneo de Karate">
+        <label class="form-label fw-bold">Descripción</label>
+        <textarea class="form-control" rows="2" [(ngModel)]="evento.descripcion" placeholder="Detalles del evento..."></textarea>
       </div>
 
-      <div class="mb-3">
-        <label class="form-label fw-bold">Ubicación</label>
-        <input type="text" class="form-control" [(ngModel)]="evento.ubicacion" placeholder="Ej: Coliseo UCB">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-bold">Fecha</label>
+          <input type="date" class="form-control" [(ngModel)]="evento.fecha">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-bold">Ubicación</label>
+          <input type="text" class="form-control" [(ngModel)]="evento.ubicacion" placeholder="Ej: Campus UCB Santa Cruz">
+        </div>
       </div>
 
-      <div class="mb-3">
-        <label class="form-label fw-bold">Precio de Entrada (Bs.)</label>
-        <input type="number" class="form-control" [(ngModel)]="evento.precioEntrada">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-bold">Tipo de Evento</label>
+          <select class="form-select" [(ngModel)]="evento.tipoEvento">
+            <option value="Gratuito">Gratuito</option>
+            <option value="Pagado">Pagado</option>
+          </select>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-bold">Precio de Entrada (Bs.)</label>
+          <input type="number" class="form-control" [(ngModel)]="evento.precioEntrada" [disabled]="evento.tipoEvento === 'Gratuito'">
+        </div>
       </div>
 
       <div class="text-center mt-4">

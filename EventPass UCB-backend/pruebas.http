@@ -1,0 +1,8 @@
+POST http://localhost:5056/api/Usuarios/crear
+Content-Type: application/json
+
+{
+  "nombre": "Leandro Jaldin",
+  "correo": "leandro@ucb.edu.bo",
+  "contrasena": "12345"
+}

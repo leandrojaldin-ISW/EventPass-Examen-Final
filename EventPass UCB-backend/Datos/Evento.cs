@@ -6,7 +6,7 @@ public abstract class Evento
     public string Descripcion { get; set;}
     public DateTime Fecha { get; set; }
     public string Ubicacion { get; set; }
-    public double IdOrganizador { get; set; }
+    public int IdOrganizador { get; set; }
     
     //clase abstracta
     public abstract double CalcularCosto(int cantidadPersonas);

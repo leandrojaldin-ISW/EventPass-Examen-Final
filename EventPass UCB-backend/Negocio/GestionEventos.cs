@@ -33,19 +33,27 @@ public class GestionEventos
     }
     
     //4. Actualizar : Buscamos el original , le cambiamos los datos y guardmos
-    public Evento ActualizarEvento(int id, Evento evendoEditado)
+    public Evento ActualizarEvento(int id, Evento eventoEditado)
     {
         var eventoExistente = _context.Eventos.Find(id);
         if (eventoExistente == null)
         {
             return null;
         }
-        
-        //Actualizamos los cambios , cambiamos datos y guardamos
-        eventoExistente.Nombre = eventoExistente.Nombre;
-        eventoExistente.Ubicacion = eventoExistente.Ubicacion;
+    
+        // Pasamos los datos del evento NUEVO (eventoEditado) al VIEJO (eventoExistente)
+        eventoExistente.Nombre = eventoEditado.Nombre;
+        eventoExistente.Ubicacion = eventoEditado.Ubicacion;
+        eventoExistente.Descripcion = eventoEditado.Descripcion;
+        eventoExistente.Fecha = eventoEditado.Fecha;
 
-        _context.SaveChanges(); //Core hace el update solo de lo que cambio
+        // Magia para el polimorfismo: Si el evento es de tipo Pagado, también actualizamos el precio
+        if (eventoExistente is EventoPagado existentePagado && eventoEditado is EventoPagado editadoPagado)
+        {
+            existentePagado.PrecioEntrada = editadoPagado.PrecioEntrada;
+        }
+
+        _context.SaveChanges(); 
         return eventoExistente;
     }
     

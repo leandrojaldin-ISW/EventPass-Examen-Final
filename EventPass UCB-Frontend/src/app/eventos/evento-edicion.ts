@@ -10,22 +10,34 @@ import { ApiClient } from '../core/http/api-client';
   templateUrl: './evento-edicion.html',
 })
 export class EventoEdicion implements OnInit {
-  evento: Evento = { id: 0, nombre: '', ubicacion: '', precioEntrada: 0 };
+  // Objeto inicial sincronizado con C#
+  evento: Evento = {
+    id: 0,
+    nombre: '',
+    descripcion: '',
+    fecha: '',
+    ubicacion: '',
+    tipoEvento: 'Pagado',
+    precioEntrada: 0
+  };
 
   private api = inject(ApiClient);
-  private url = 'http://localhost:5056/Eventos'; // OJO: Mismo puerto que usaste en la lista
+  private url = 'http://localhost:5056/api/Eventos';
 
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
   ngOnInit() {
     const idParam = this.route.snapshot.paramMap.get('id');
-    // Si el ID no es "nuevo", entonces vamos a C# a buscar los datos para editarlos
     if (idParam && idParam !== 'nuevo') {
       const id = Number(idParam);
       if (id > 0) {
-        this.api.get<Evento>(this.url + '/' + id).subscribe({
-          next: data => this.evento = data,
+        this.api.get<Evento>(this.url + '/buscar/' + id).subscribe({
+          next: data => {
+            this.evento = data;
+            // Pequeño truco para que el select se llene bien al editar
+            this.evento.tipoEvento = data.precioEntrada > 0 ? 'Pagado' : 'Gratuito';
+          },
           error: error => console.error('Error al obtener evento', error)
         });
       }
@@ -34,14 +46,12 @@ export class EventoEdicion implements OnInit {
 
   guardar() {
     if (this.evento.id === 0) {
-      // Si el ID es 0, es un evento nuevo -> Hacemos POST (Crear)
-      this.api.post<Evento>(this.url, this.evento).subscribe({
+      this.api.post<Evento>(this.url + '/crear', this.evento).subscribe({
         next: () => this.router.navigate(['/eventos']),
         error: error => console.error('Error al crear evento', error)
       });
     } else {
-      // Si ya tiene ID, es un evento existente -> Hacemos PUT (Actualizar)
-      this.api.put(this.url + '/' + this.evento.id, this.evento).subscribe({
+      this.api.put(this.url + '/editar?id=' + this.evento.id, this.evento).subscribe({
         next: () => this.router.navigate(['/eventos']),
         error: error => console.error('Error al actualizar evento', error)
       });
