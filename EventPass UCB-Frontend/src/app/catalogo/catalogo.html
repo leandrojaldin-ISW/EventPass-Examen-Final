@@ -1,0 +1,41 @@
+<div class="container mt-5">
+  <div class="text-center mb-5">
+    <h2 class="fw-bold">Explorar Eventos</h2>
+    <p class="text-muted">Descubre y participa en los mejores eventos de la plataforma</p>
+  </div>
+
+  <div class="row">
+    @for (evento of eventos; track evento.id) {
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+
+          <div class="card-header bg-dark text-white text-center py-3">
+            <h5 class="card-title mb-0">{{ evento.nombre }}</h5>
+          </div>
+
+          <div class="card-body">
+            <p class="card-text text-muted mb-3">{{ evento.descripcion }}</p>
+            <hr>
+            <p class="mb-2"><strong><i class="bi bi-calendar"></i> Fecha:</strong> {{ evento.fecha | date:'short' }}</p>
+            <p class="mb-2"><strong><i class="bi bi-geo-alt"></i> Ubicación:</strong> {{ evento.ubicacion }}</p>
+
+            <div class="mt-3 text-center">
+              @if (evento.tipoEvento === 'Gratuito') {
+                <span class="badge bg-success fs-6 px-3 py-2">Evento Gratuito</span>
+              } @else {
+                <span class="badge bg-warning text-dark fs-6 px-3 py-2">Costo: {{ evento.precioEntrada }} Bs.</span>
+              }
+            </div>
+          </div>
+
+          <div class="card-footer bg-white border-0 pb-4 text-center">
+            <button class="btn btn-outline-success btn-lg w-100 fw-bold" (click)="irAInscripcion(evento.id)">
+              Inscribirse
+            </button>
+          </div>
+
+        </div>
+      </div>
+    }
+  </div>
+</div>
