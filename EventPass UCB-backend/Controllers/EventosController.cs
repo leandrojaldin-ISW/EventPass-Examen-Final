@@ -89,7 +89,8 @@ public class EventosController : ControllerBase
             DateTime fecha = DateTime.Parse(fechaString);
             
             // Asignamos un organizador por defecto para cumplir con la base de datos
-            int idOrganizador = 1; 
+            // Leemos el ID real del usuario que mandó Angular
+            int idOrganizador = datosEvento.GetProperty("idOrganizador").GetInt32();
 
             Evento nuevoEvento;
 
@@ -146,7 +147,9 @@ public IActionResult Editar(int id, [FromBody] System.Text.Json.JsonElement dato
         string descripcion = datosEvento.GetProperty("descripcion").GetString();
         string fechaString = datosEvento.GetProperty("fecha").GetString(); 
         DateTime fecha = DateTime.Parse(fechaString);
-
+        
+        int idOrganizador = datosEvento.GetProperty("idOrganizador").GetInt32();
+        
         Evento eventoModificado;
 
         // 2. Instanciamos la clase hija correspondiente
@@ -160,7 +163,7 @@ public IActionResult Editar(int id, [FromBody] System.Text.Json.JsonElement dato
                 Ubicacion = ubicacion,
                 Descripcion = descripcion,
                 Fecha = fecha,
-                IdOrganizador = 1, // Mantenemos tu usuario fantasma de prueba
+                IdOrganizador = idOrganizador,
                 PrecioEntrada = precio
             };
         }
@@ -173,7 +176,7 @@ public IActionResult Editar(int id, [FromBody] System.Text.Json.JsonElement dato
                 Ubicacion = ubicacion,
                 Descripcion = descripcion,
                 Fecha = fecha,
-                IdOrganizador = 1
+                IdOrganizador = idOrganizador
             };
         }
 

@@ -37,4 +37,19 @@ public class GestionUsuarios
 
         return null;
     }
+
+    public Usuario AutenticarUsuario(string correo, string password)
+    {
+        var listaUsuarios = _context.Usuarios.ToList();
+
+        for (int i = 0; i < listaUsuarios.Count; i++)
+        {
+            if (listaUsuarios[i].Correo == correo && listaUsuarios[i].Password == password)
+            {
+                return listaUsuarios[i];
+            }
+        }
+
+        return null;
+    }
 }

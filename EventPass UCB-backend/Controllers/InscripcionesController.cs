@@ -15,7 +15,7 @@ public class InscripcionesController : ControllerBase
         _gestionInscripciones = gestionInscripciones;
     }
 
-    [HttpPost]
+    [HttpPost("crear")]
     public IActionResult Inscribir([FromBody] Inscripcion nuevaInscripcion)
     {
         var resultado = _gestionInscripciones.RegistrarInscripcion(nuevaInscripcion);
@@ -26,7 +26,8 @@ public class InscripcionesController : ControllerBase
 
         return Ok(resultado);
     }
-
+    
+    
     [HttpGet("usuario/{idUsuario}")]
     public IActionResult MisIncripciones(int idUsuario)
     {

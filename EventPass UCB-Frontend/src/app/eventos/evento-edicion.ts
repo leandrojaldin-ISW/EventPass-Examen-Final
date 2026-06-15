@@ -45,13 +45,24 @@ export class EventoEdicion implements OnInit {
   }
 
   guardar() {
+    // 1. Rescatamos el ID de la memoria del navegador y lo convertimos a número
+    const miId = Number(localStorage.getItem('usuarioId'));
+
+    // 2. Armamos el paquete final combinando los datos del formulario con el ID real
+    const datosParaEnviar = {
+      ...this.evento,        // Copia todos los campos (nombre, fecha, etc.)
+      idOrganizador: miId    // Agrega la llave faltante para el backend
+    };
+
     if (this.evento.id === 0) {
-      this.api.post<Evento>(this.url + '/crear', this.evento).subscribe({
+      // Enviamos "datosParaEnviar" en lugar de "this.evento"
+      this.api.post<Evento>(this.url + '/crear', datosParaEnviar).subscribe({
         next: () => this.router.navigate(['/eventos']),
         error: error => console.error('Error al crear evento', error)
       });
     } else {
-      this.api.put(this.url + '/editar?id=' + this.evento.id, this.evento).subscribe({
+      // Lo mismo para editar
+      this.api.put(this.url + '/editar?id=' + this.evento.id, datosParaEnviar).subscribe({
         next: () => this.router.navigate(['/eventos']),
         error: error => console.error('Error al actualizar evento', error)
       });

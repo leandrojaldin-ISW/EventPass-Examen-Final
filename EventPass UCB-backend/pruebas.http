@@ -1,8 +1,17 @@
-POST http://localhost:5056/api/Usuarios/crear
+### 1. Prueba de Login EXITOSO (El usuario existe)
+POST http://localhost:5056/api/Usuarios/login
 Content-Type: application/json
 
 {
-  "nombre": "Leandro Jaldin",
-  "correo": "leandro@ucb.edu.bo",
-  "contrasena": "12345"
+  "correo": "javi@ucb.edu.bo",
+  "password": "12345"
+}
+
+### 2. Prueba de Login FALLIDO (Contraseña incorrecta)
+POST http://localhost:5056/api/Usuarios/login
+Content-Type: application/json
+
+{
+  "correo": "javi@ucb.edu.bo",
+  "password": "contrasena_equivocada"
 }
