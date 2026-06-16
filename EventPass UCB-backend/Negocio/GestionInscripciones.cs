@@ -14,19 +14,16 @@ public class GestionInscripciones
 
     public Inscripcion RegistrarInscripcion(Inscripcion nuevaInscripcion)
     {
-        //Buscamos el evento original en base a los datos
         var evento = _context.Eventos.Find(nuevaInscripcion.IdEvento);
-        if (evento == null) //si no existe el evento cortamos aqui
+        if (evento == null) 
         {
             return null;
         }
         
-        //Polimorfismo
-        //Llamamos al metodo calcularcosto. Ef core ya sabe si el evento es Gratuito o pagado
-        //si es gratuito, este devuleve 0, si es pagado , multiplaca el precio por la cantidad de perosnas
-        nuevaInscripcion.TotalPagado = evento.CalcularCosto(nuevaInscripcion.CantidadPersonas);
+        // EL PUENTE: CalcularCosto sigue devolviendo double, pero lo convertimos 
+        // a decimal aquí mismo para guardarlo sin romper las demás clases.
+        nuevaInscripcion.TotalPagado = Convert.ToDecimal(evento.CalcularCosto(nuevaInscripcion.CantidadPersonas));
         
-        //3.Guardamos la inscripcion con el precio final ya calculado
         _context.Inscripciones.Add(nuevaInscripcion);
         _context.SaveChanges();
 

@@ -6,5 +6,5 @@ public class Inscripcion
     public int IdUsuario { get; set; }
     public int IdEvento { get; set; }
     public int CantidadPersonas { get; set; }
-    public double TotalPagado { get; set; }
+    public decimal TotalPagado { get; set; }
 }

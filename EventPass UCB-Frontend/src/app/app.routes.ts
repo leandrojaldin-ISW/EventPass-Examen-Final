@@ -7,6 +7,7 @@ import { ComentarioLista} from './comentarios/comentario-lista';
 import { Login } from './login/login';
 import { Catalogo } from './catalogo/catalogo';
 import { Inscripcion } from './inscripcion/inscripcion';
+import { MisTickets } from './mis-tickets/mis-tickets';
 
 export const routes: Routes = [
   // 1. Ahora la ruta vacía redirige primero al Login
@@ -25,6 +26,7 @@ export const routes: Routes = [
 
   { path: 'catalogo', component: Catalogo },
 
-  // 👉 LA NUEVA RUTA PARA LA PANTALLA DE INSCRIPCIÓN
+  //ruta nueva para la inscripcion
   { path: 'inscripcion/:id', component: Inscripcion },
+  { path: 'mis-tickets', component: MisTickets },
 ];

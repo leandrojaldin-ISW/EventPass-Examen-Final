@@ -42,22 +42,22 @@ export class Inscripcion implements OnInit {
   }
 
   confirmarInscripcion() {
-    // 1. Rescatamos el ID del usuario
     const usuarioId = Number(localStorage.getItem('usuarioId'));
 
-    // 2. Armamos el paquete de datos exacto que espera tu clase en C#
+    // SOLUCIÓN INFALIBLE: Si precioEntrada es null, undefined o no existe, usa 0
+    const precioSeguro = this.evento.precioEntrada || 0;
+
     const datosInscripcion = {
       idUsuario: usuarioId,
       idEvento: this.evento.id,
       cantidadPersonas: this.cantidad,
-      totalPagado: this.cantidad * this.evento.precioEntrada // Calculamos el total
+      // Multiplicamos por la variable segura
+      totalPagado: this.cantidad * precioSeguro
     };
 
-    // 3. Enviamos los datos reales al backend
     this.api.post('http://localhost:5056/api/Inscripciones/crear', datosInscripcion)
       .subscribe({
         next: () => {
-          // Si el backend dice "OK", mostramos el mensaje de éxito y volvemos al catálogo
           alert('¡Inscripción registrada con éxito! Ya tienes tu lugar asegurado.');
           this.router.navigate(['/catalogo']);
         },

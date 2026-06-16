@@ -1,37 +1,55 @@
-<div class="container mt-4">
-  <div class="row justify-content-center">
-    <div class="col-md-10">
+<div class="container mt-5 pt-4">
+  <div class="text-center mb-4">
+    <h2 class="fw-bold">Comentarios de los Usuarios</h2>
+    <p class="text-muted">Deja tu opinión sobre nuestros eventos</p>
+  </div>
 
-      <h2>Comentarios de los Usuarios</h2>
-      <br/>
-
-      <table class="table table-hover shadow-sm">
-        <thead class="table-dark">
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Autor</th>
-          <th scope="col">Comentario</th>
-          <th scope="col">ID Evento</th>
-        </tr>
-        </thead>
-        <tbody class="table-group-divider">
-
-          @for (comentario of comentarios; track comentario.id) {
-            <tr>
-              <th scope="row">{{ comentario.id }}</th>
-              <td>{{ comentario.autor }}</td>
-              <td>{{ comentario.texto }}</td>
-              <td>{{ comentario.idEvento }}</td>
-            </tr>
-          } @empty {
-            <tr>
-              <td colspan="4" class="text-center text-muted">Aún no hay comentarios registrados.</td>
-            </tr>
-          }
-
-        </tbody>
-      </table>
-
+  <div class="card shadow-sm mb-5 border-0 bg-light">
+    <div class="card-body">
+      <div class="row align-items-center">
+        <div class="col-md-2">
+          <label class="form-label fw-bold">ID Evento</label>
+          <input type="number" class="form-control" [(ngModel)]="nuevoComentario.idEvento">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label fw-bold">Autor</label>
+          <input type="text" class="form-control" [(ngModel)]="nuevoComentario.autor" readonly>
+        </div>
+        <div class="col-md-5">
+          <label class="form-label fw-bold">Tu Comentario</label>
+          <input type="text" class="form-control" placeholder="¡Excelente evento!" [(ngModel)]="nuevoComentario.texto">
+        </div>
+        <div class="col-md-2 mt-4">
+          <button class="btn btn-dark w-100" (click)="publicarComentario()">Publicar</button>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="table-responsive shadow-sm">
+    <table class="table table-hover table-bordered mb-0">
+      <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Autor</th>
+        <th>Comentario</th>
+        <th>ID Evento</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (comentario of comentarios; track comentario.id) {
+          <tr>
+            <td class="fw-bold">{{ comentario.id }}</td>
+            <td>{{ comentario.autor }}</td>
+            <td>{{ comentario.texto }}</td>
+            <td><span class="badge bg-secondary">Evento #{{ comentario.idEvento }}</span></td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="4" class="text-center py-4 text-muted">Aún no hay comentarios registrados en el sistema.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
   </div>
 </div>

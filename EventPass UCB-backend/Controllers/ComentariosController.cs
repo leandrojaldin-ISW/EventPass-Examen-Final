@@ -16,7 +16,7 @@ public class ComentariosController : ControllerBase
         _gestionComentarios = gestionComentarios;
     }
 
-    [HttpGet]
+    [HttpGet("lista")]
     public IActionResult ConsultarTodos()
     {
         return Ok(_gestionComentarios.ObtenerTodos());
@@ -28,7 +28,7 @@ public class ComentariosController : ControllerBase
         return Ok(_gestionComentarios.ObtenerPorEvento(idEvento));
     }
 
-    [HttpPost]
+    [HttpPost("crear")]
     public IActionResult Registrar([FromBody] Comentario nuevoComentario)
     {
         var resultado = _gestionComentarios.CrearComentario(nuevoComentario);
